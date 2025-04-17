@@ -12,8 +12,8 @@
 #define MAX_ARGS 64
 
 /* Prototypes */
-void display_prompt(void);
+void display_prompt(int interactive);
+char *read_input(void);
 int parse_input(char *input, char *args[]);
 int execute_command(char *args[], char **env);
-
 #endif
