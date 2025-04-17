@@ -16,4 +16,6 @@ void display_prompt(int interactive);
 char *read_input(void);
 int parse_input(char *input, char *args[]);
 int execute_command(char *args[], char **env);
+int handle_builtins(char **args);
+
 #endif

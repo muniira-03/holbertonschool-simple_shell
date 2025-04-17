@@ -5,8 +5,10 @@
  * @argc: Argument count (unused)
  * @argv: Argument vector (unused)
  * @env: Environment variables
+ *
  * Return: EXIT_SUCCESS on success
  */
+
 int main(int argc __attribute__((unused)),
 char **argv __attribute__((unused)),
 char **env)
@@ -38,8 +40,11 @@ if (next_line)
 *next_line++ = '\0';
 
 if (parse_input(line, args) > 0)
+{
+if (handle_builtins(args))
+break;
 execute_command(args, env);
-
+}
 line = next_line;
 }
 }
