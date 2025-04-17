@@ -1,14 +1,13 @@
 #include "shell.h"
 
 /**
- * split_commands - Handles multiple commands without strtok_r
- * @input: Input string with possible multiple commands
+ * split_commands - Handles multiple commands
+ * @input: Input string with commands
  * @env: Environment variables
  */
 void split_commands(char *input, char **env)
 {
 char *args[MAX_ARGS];
-int i = 0;
 char *start = input;
 
 while (*input)
