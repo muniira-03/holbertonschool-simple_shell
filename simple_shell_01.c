@@ -16,23 +16,21 @@ char **argv __attribute__((unused)),
 char **env)
 {
 char *input;
+char *command;
 char *args[MAX_ARGS];
-int interactive = isatty(STDIN_FILENO);
+char *saveptr;
 
-while (1)
-{
-display_prompt(interactive);
-input = read_input();
-if (input == NULL)
-{
-if (interactive)
-printf("\n");
-break;
-}
-
-if (parse_input(input, args) > 0)
-execute_command(args, env);
-}
-
+	while ((input = read_input()) != NULL)
+	{
+		command = strtok_r(input, "\n", &saveptr);
+			while (command != NULL)
+			{
+				if (parse_input(command, args) > 0)
+				{
+					execute_command(args, env);
+				}
+				command = strtok_r(NULL, "\n", &saveptr);
+			}
+	}
 return (EXIT_SUCCESS);
 }
