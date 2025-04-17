@@ -9,10 +9,10 @@
  */
 int execute_command(char *args[], char **env)
 {
-pid_t pid;
+	pid_t pid;
 
 	if (args[0] == NULL)
-	return (1);
+		return (1);
 
 	pid = fork();
 	if (pid == -1)
@@ -33,5 +33,5 @@ pid_t pid;
 	{
 		wait(NULL);
 	}
-
+	return (1);
 }
