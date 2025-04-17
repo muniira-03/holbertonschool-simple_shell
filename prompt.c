@@ -1,14 +1,10 @@
 #include "shell.h"
 
 /**
- * prompt - short description
- *
- * Description: long description
- *
- * Return: -1 on failure greater than 0 on success
+ * display_prompt - Displays the shell prompt
  */
-void prompt(void)
+void display_prompt(void)
 {
-	if (isatty(STDIN_FILENO))
-		write(STDOUT_FILENO, "$ ", strlen("$ "));
+	printf("$ ");
+	fflush(stdout);
 }
