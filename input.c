@@ -7,24 +7,11 @@
 char *read_input(void)
 {
 static char buffer[MAX_INPUT];
-ssize_t bytes_read;
-char *pos = buffer;
-size_t remaining = MAX_INPUT - 1;
+ssize_t bytes_read = read(STDIN_FILENO, buffer, MAX_INPUT - 1);
 
-while (1)
-{
-bytes_read = read(STDIN_FILENO, pos, remaining);
 if (bytes_read <= 0)
-break;
-pos += bytes_read;
-remaining -= bytes_read;
-if (*(pos - 1) == '\n')
-break;
-}
-
-if (bytes_read <= 0 && pos == buffer)
 return (NULL);
 
-*pos = '\0';
+buffer[bytes_read] = '\0';
 return (buffer);
 }

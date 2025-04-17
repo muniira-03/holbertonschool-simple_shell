@@ -14,10 +14,14 @@ char **env)
 char *input;
 char *args[MAX_ARGS];
 int interactive = isatty(STDIN_FILENO);
+char *line;
+char *next_line;
 
 while (1)
 {
-display_prompt(interactive);
+if (interactive)
+display_prompt(1);
+
 input = read_input();
 if (input == NULL)
 {
@@ -26,8 +30,18 @@ printf("\n");
 break;
 }
 
-if (parse_input(input, args) > 0)
+line = input;
+while (line)
+{
+next_line = strchr(line, '\n');
+if (next_line)
+*next_line++ = '\0';
+
+if (parse_input(line, args) > 0)
 execute_command(args, env);
+
+line = next_line;
+}
 }
 return (EXIT_SUCCESS);
 }
