@@ -11,7 +11,7 @@
 #define MAX_INPUT 1024
 #define MAX_ARGS 64
 
-/* Prototypes */
+/* Function prototypes */
 void display_prompt(int interactive);
 char *read_input(void);
 int parse_input(char *input, char *args[]);
