@@ -1,30 +1,33 @@
 #include "shell.h"
 
-/**
- * split_commands - Handles multiple commands
- * @input: Input string with commands
- * @env: Environment variables
- */
 void split_commands(char *input, char **env)
 {
-char *args[MAX_ARGS];
-char *start = input;
-
-while (*input)
-{
-if (*input == '\n')
-{
-*input = '\0';
-if (parse_input(start, args) > 0)
-execute_command(args, env);
-start = input + 1;
-}
-input++;
-}
-
-if (*start)
-{
-if (parse_input(start, args) > 0)
-execute_command(args, env);
-}
+    char *start = input;
+    char *end;
+    char *args[MAX_ARGS];
+    int arg_count;
+    
+    while (*start) {
+        /* Find command separator (;) */
+        end = strchr(start, ';');
+        if (end) {
+            *end = '\0';
+        }
+        
+        /* Parse and execute current command */
+        arg_count = parse_input(start, args);
+        if (arg_count > 0) { /* Compare with integer, not pointer */
+            execute_command(args, env);
+        }
+        
+        /* Move to next command */
+        if (end) {
+            start = end + 1;
+            while (*start == ' ') {
+                start++; /* Skip spaces */
+            }
+        } else {
+            break;
+        }
+    }
 }
