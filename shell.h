@@ -18,5 +18,6 @@ void execute_command(char **args, char **env);
 char *find_command_path(char *command);
 int is_builtin(char **args);
 void split_commands(char *input, char **env);
+int command_exists(char *command);
 
 #endif
