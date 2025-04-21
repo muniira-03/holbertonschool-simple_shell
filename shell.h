@@ -11,13 +11,15 @@
 
 #define MAX_INPUT 1024
 #define MAX_ARGS 64
+#define BUFFER_SIZE 1024
 
 /* Function declarations */
+int _getline(char *buffer, int size);
+char *_getenv(const char *name);
 int parse_input(char *input, char **args);
 void execute_command(char **args, char **env);
 char *find_command_path(char *command);
 int is_builtin(char **args);
 void split_commands(char *input, char **env);
-int command_exists(char *command);
 
-#endif
+#endif /* SHELL_H */

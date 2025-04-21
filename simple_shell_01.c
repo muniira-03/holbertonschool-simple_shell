@@ -7,27 +7,21 @@
  */
 int main(void)
 {
-	char input[MAX_INPUT];
-	char *args[MAX_ARGS];
-	extern char **environ;
+    char input[MAX_INPUT];
+    char *args[MAX_ARGS];
+    extern char **environ;
+    int interactive = isatty(STDIN_FILENO);
 
-	while (1)
-	{
-		printf("$");
-		fflush(stdout);
+    while (1)
+    {
+        if (interactive)
+            write(STDOUT_FILENO, "$ ", 2);
 
-		if (!fgets(input, MAX_INPUT, stdin))
-		{
-			printf("\n");
-			break;
-		}
+        if (_getline(input, MAX_INPUT) == -1)
+            break;
 
-		input[strcspn(input, "\n")] = '\0';
-
-		if (parse_input(input, args) > 0)
-		{
-			execute_command(args, environ);
-		}
-	}
-	return (0);
+        if (parse_input(input, args) > 0)
+            execute_command(args, environ);
+    }
+    return (0);
 }
