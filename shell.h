@@ -11,9 +11,7 @@
 #define MAX_INPUT 1024
 #define MAX_ARGS 64
 
-
-extern char **environ;
-
-ssize_t _getline(char *line, size_t size);
+size_t _strlen(const char *s);
+char *_strchr(const char *s, int c);
 char *_strtok(char *str, const char *delim);
 #endif

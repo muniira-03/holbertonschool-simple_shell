@@ -1,5 +1,9 @@
 #include "shell.h"
 
+/**
+ * main - Simple shell entry point
+ * Return: Exit status
+ */
 int main(void)
 {
     char input[MAX_INPUT] = {0};
@@ -14,31 +18,29 @@ int main(void)
     while (1)
     {
         if (interactive)
-            if (write(STDOUT_FILENO, "$ ", 2) == -1)
-                perror("write");
+            write(STDOUT_FILENO, "$ ", 2);
 
-        read_bytes = _getline(input, MAX_INPUT);
-        if (read_bytes == -1)  /*/ EOF or error*/
+        read_bytes = read(STDIN_FILENO, input, MAX_INPUT - 1);
+        if (read_bytes == -1)
+        {
+            perror("read");
             break;
-        else if (read_bytes == 0)  /* Empty line*/
-            continue;
+        }
+        else if (read_bytes == 0) /* EOF */
+            break;
 
-        /*Ensure input is null-terminated*/
-        if (read_bytes >= MAX_INPUT)
-            input[MAX_INPUT - 1] = '\0';
-        else
-            input[read_bytes] = '\0';
+        input[read_bytes] = '\0';
 
-        /* Tokenization with safeguards*/
+        /* Tokenize input */
         token = _strtok(input, " \t\n");
-        for (i = 0; token != NULL && i < MAX_ARGS - 1; i++)
+        for (i = 0; token && i < MAX_ARGS - 1; i++)
         {
             args[i] = token;
             token = _strtok(NULL, " \t\n");
         }
-        args[i] = NULL;  /* Ensure NULL termination*/
+        args[i] = NULL;
 
-        if (args[0] == NULL)  /* No command found*/
+        if (!args[0]) /* Empty command */
             continue;
 
         pid = fork();
@@ -48,15 +50,13 @@ int main(void)
             continue;
         }
 
-        if (pid == 0)  /*Child process*/
+        if (pid == 0) /* Child */
         {
-            if (execvp(args[0], args) == -1)
-            {
-                perror(args[0]);
-                exit(EXIT_FAILURE);
-            }
+            execvp(args[0], args);
+            perror(args[0]);
+            exit(EXIT_FAILURE);
         }
-        else  /*Parent process*/
+        else /* Parent */
         {
             waitpid(pid, &status, 0);
         }
