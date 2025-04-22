@@ -79,3 +79,20 @@ char *_strtok(char *str, const char *delim)
 
     return start;
 }
+
+
+/**
+ * _strcmp - Custom strcmp implementation
+ * @s1: First string
+ * @s2: Second string
+ * Return: 0 if equal, difference otherwise
+ */
+int _strcmp(char *s1, char *s2)
+{
+    while (*s1 && *s2 && *s1 == *s2)
+    {
+        s1++;
+        s2++;
+    }
+    return *s1 - *s2;
+}

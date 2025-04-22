@@ -43,6 +43,10 @@ int main(void)
         if (!args[0]) /* Empty command */
             continue;
 
+	/* Handle built-in commands */
+        if (_strcmp(args[0], "exit") == 0)
+            handle_exit(args);
+
         pid = fork();
         if (pid == -1)
         {

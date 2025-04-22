@@ -14,4 +14,8 @@
 size_t _strlen(const char *s);
 char *_strchr(const char *s, int c);
 char *_strtok(char *str, const char *delim);
+int _strcmp(char *s1, char *s2);
+int _atoi(char *s);
+int handle_exit(char **args);
+
 #endif
