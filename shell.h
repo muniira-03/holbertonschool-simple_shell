@@ -11,7 +11,6 @@
 
 #define MAX_INPUT 1024
 #define MAX_ARGS 64
-#define BUFFER_SIZE 1024
 
 /* Function declarations */
 int _getline(char *buffer, int size);
