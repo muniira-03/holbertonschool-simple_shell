@@ -22,7 +22,7 @@ char *find_command_path(char *command)
 	return (NULL);
 	path_copy = strdup(path);
 	if (!path_copy)
-	retune(NULL);
+	return (NULL);
 	dir = strtok(path_copy, ":");
 	while (dir)
 	{
