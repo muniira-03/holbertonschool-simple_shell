@@ -5,24 +5,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
 
 #define MAX_INPUT 1024
 #define MAX_ARGS 64
+#define MAX_PATH_LEN 1024
 
-/* Function declarations */
-int _getline(char *buffer, int size);
-char *_getenv(const char *name);
-int parse_input(char *input, char **args);
-int execute_command(char **args, char **env);
-char *find_command_path(char *command);
-int is_builtin(char **args);
-void split_commands(char *input, char **env);
 extern char **environ;
-void free_args(char **args);
-int shell_exit(char **args);
-int print_environment(char **env);
 
-#endif /* SHELL_H */
+int split_input(char *input, char **args);
+char *find_command_path(char *command);
+
+
+#endif
