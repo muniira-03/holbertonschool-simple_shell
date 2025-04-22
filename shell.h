@@ -16,10 +16,13 @@
 int _getline(char *buffer, int size);
 char *_getenv(const char *name);
 int parse_input(char *input, char **args);
-void execute_command(char **args, char **env);
+int execute_command(char **args, char **env);
 char *find_command_path(char *command);
 int is_builtin(char **args);
 void split_commands(char *input, char **env);
 extern char **environ;
 void free_args(char **args);
+int shell_exit(char **args);
+int print_environment(char **env);
+
 #endif /* SHELL_H */
