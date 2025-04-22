@@ -24,31 +24,34 @@ int main(void)
             break;
 
         input[read_bytes] = '\0';
-/* Split into commands by newline */
-        char *cmd = _strtok(input, "\n");
-        while (cmd)
+
+        /* Split into commands (by newline) */
+        cmd_count = 0;
+        cmd_token = _strtok(input, "\n");
+        while (cmd_token && cmd_count < MAX_INPUT/2)
         {
-            /* Tokenize command */
-            int i = 0;
-            char *arg = _strtok(cmd, " \t");
-            while (arg && i < MAX_ARGS - 1)
+            commands[cmd_count++] = cmd_token;
+            cmd_token = _strtok(NULL, "\n");
+        }
+        commands[cmd_count] = NULL;
+
+        /* Process each command */
+        for (i = 0; commands[i]; i++)
+        {
+            /* Split command into arguments */
+            j = 0;
+            arg_token = _strtok(commands[i], " \t");
+            while (arg_token && j < MAX_ARGS - 1)
             {
-                args[i++] = arg;
-                arg = _strtok(NULL, " \t");
+                args[j++] = arg_token;
+                arg_token = _strtok(NULL, " \t");
             }
-            args[i] = NULL;
+            args[j] = NULL;
 
             if (args[0])
-            {
-                if (_strcmp(args[0], "exit") == 0)
-                    handle_exit(args, last_status);
-                
-                last_status = execute_command(args);
-            }
-
-            cmd = _strtok(NULL, "\n");
+                execute_command(args);
         }
     }
 
-    return last_status;
+    return 0;
 }
