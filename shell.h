@@ -21,5 +21,5 @@ char *find_command_path(char *command);
 int is_builtin(char **args);
 void split_commands(char *input, char **env);
 extern char **environ;
-
+void free_args(char **args);
 #endif /* SHELL_H */

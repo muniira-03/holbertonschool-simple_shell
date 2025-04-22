@@ -41,5 +41,11 @@ void execute_command(char **args, char **env)
 	waitpid(pid, &status, 0);
 	}
 
+	if (strcmp(args[0], "exit") == 0)
+	{
+		free_args(args);
+		exit(0);
+	}
+
 	free(full_path);
 }
