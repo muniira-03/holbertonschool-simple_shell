@@ -24,6 +24,13 @@ int main(void)
 
 	input[strcspn(input, "\n")] = '\0';
 
+	if (_getline(input, MAX_INPUT) <= 0)
+	{
+		if (isatty(STDIN_FILENO))
+		write(STDOUT_FILENO, "\n", 1);
+		break;
+	}
+
 	if (parse_input(input, args) > 0)
 	execute_command(args, environ);
 	}
