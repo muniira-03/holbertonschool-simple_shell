@@ -27,15 +27,15 @@ int _atoi(char *s)
 }
 
 /**
- * handle_exit - Handles the exit built-in command
+ * handle_exit - Handles exit command
  * @args: Command arguments
- * Return: 1 if not exiting, -1 if exiting with error
+ * @last_status: Last command's exit status
  */
-int handle_exit(char **args)
+void handle_exit(char **args, int last_status)
 {
-    int status = 0;
-
-    if (args[1])
+    int status = last_status; /* Default to last command's status */
+    
+    if (args[1]) /* If exit has argument */
     {
         status = _atoi(args[1]);
         if (status < 0)
@@ -44,36 +44,34 @@ int handle_exit(char **args)
             status = 2;
         }
     }
-
+    
     exit(status);
 }
 
 /**
  * execute_command - Executes a single command
- * @args: Array of command and arguments
- * Return: Status code
+ * @args: Command and arguments
+ * Return: Exit status of command
  */
 int execute_command(char **args)
 {
-    pid_t pid;
-    int status;
-
     if (_strcmp(args[0], "exit") == 0)
-        handle_exit(args);
+        return 0; /* exit is handled in main loop */
 
-    pid = fork();
-    if (pid == 0)
+    pid_t pid = fork();
+    if (pid == 0) /* Child */
     {
         execvp(args[0], args);
         perror(args[0]);
-        exit(EXIT_FAILURE);
+        exit(127); /* Command not found status */
     }
-    else if (pid > 0)
+    else if (pid > 0) /* Parent */
     {
+        int status;
         waitpid(pid, &status, 0);
         return WEXITSTATUS(status);
     }
-    else
+    else /* Fork failed */
     {
         perror("fork");
         return 1;

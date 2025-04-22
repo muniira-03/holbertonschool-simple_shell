@@ -16,6 +16,6 @@ char *_strchr(const char *s, int c);
 char *_strtok(char *str, const char *delim);
 int _strcmp(char *s1, char *s2);
 int _atoi(char *s);
-int handle_exit(char **args);
+void handle_exit(char **args, int last_status);
 int execute_command(char **args);
 #endif
