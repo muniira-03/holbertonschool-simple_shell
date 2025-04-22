@@ -10,12 +10,10 @@
 
 #define MAX_INPUT 1024
 #define MAX_ARGS 64
-#define MAX_PATH_LEN 1024
+
 
 extern char **environ;
 
-int split_input(char *input, char **args);
-char *find_command_path(char *command);
-
-
+ssize_t _getline(char *line, size_t size);
+char *_strtok(char *str, const char *delim);
 #endif
