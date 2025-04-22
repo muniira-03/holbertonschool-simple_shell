@@ -47,3 +47,36 @@ int handle_exit(char **args)
 
     exit(status);
 }
+
+/**
+ * execute_command - Executes a single command
+ * @args: Array of command and arguments
+ * Return: Status code
+ */
+int execute_command(char **args)
+{
+    pid_t pid;
+    int status;
+
+    if (_strcmp(args[0], "exit") == 0)
+        handle_exit(args);
+
+    pid = fork();
+    if (pid == 0)
+    {
+        execvp(args[0], args);
+        perror(args[0]);
+        exit(EXIT_FAILURE);
+    }
+    else if (pid > 0)
+    {
+        waitpid(pid, &status, 0);
+        return WEXITSTATUS(status);
+    }
+    else
+    {
+        perror("fork");
+        return 1;
+    }
+}
+
