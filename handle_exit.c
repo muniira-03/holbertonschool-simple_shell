@@ -84,7 +84,7 @@ int execute_command(char **args, int *last_status, int *cmd_count)
     }
     else if (pid > 0)
     {
-       /*(*cmd_count)++;*/
+       (*cmd_count)++;
         waitpid(pid, &status, 0);
         *last_status = WEXITSTATUS(status);
         return *last_status;
