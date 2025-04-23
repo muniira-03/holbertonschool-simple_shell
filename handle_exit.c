@@ -69,14 +69,19 @@ int execute_command(char **args, int *last_status, int *cmd_count)
     pid = fork();
     if (pid == 0)
     {/*new*/
-/* Check if PATH is empty */
+        /* Check if PATH is empty */
         char *path = getenv("PATH");
         if (path == NULL || path[0] == '\0')
         {
             fprintf(stderr, "./hsh: %d: %s: not found\n", *cmd_count, args[0]);
             exit(127);
         }
-    
+    /* Check if PATH exists at all */
+        if (getenv("PATH") == NULL)
+        {
+            fprintf(stderr, "./hsh: %d: %s: not found\n", *cmd_count, args[0]);
+            exit(127);
+        }
 	    
         execvp(args[0], args);
         fprintf(stderr, "./hsh: %d: %s: not found\n", *cmd_count, args[0]);
