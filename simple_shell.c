@@ -13,7 +13,7 @@ int main(void)
     ssize_t read_bytes;
     int i, j, cmd_count;
     char *cmd_token, *arg_token;
-      int last_status = 0; /*new*/
+      int last_status = 0; 
 	int cmd_counter = 1;
 
     while (1)
@@ -52,8 +52,6 @@ int main(void)
 
             if (args[0])
 	    {
-     		/*execute_command(args);
-            execute_command(args, &last_status);*/
 	   last_status = execute_command(args, &last_status, &cmd_counter);
                 cmd_counter++;
 	    }
@@ -61,6 +59,5 @@ int main(void)
 	}
     }
 
-    /*return 0;*/
     return last_status;
 }
