@@ -81,30 +81,36 @@ int execute_command(char **args, int *last_status) /*int *last_status is new*/
     int status;
 
     if (_strcmp(args[0], "exit") == 0)
-	{/*handle_exit(args);*/
+	{
 	 	handle_exit(args, *last_status);
         	return *last_status;
 	}
 
     pid = fork();
     if (pid == 0)
-    {
+    {	
+	struct stat st;
+	if (stat(args[0], &st) == -1)/*new*/
+        {
+          fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+            exit(127);
+        }
+
+
         execvp(args[0], args);
         perror(args[0]);
-        /*exit(EXIT_FAILURE);*/
 	exit(127); /* Command not found status */
     }
     else if (pid > 0)
     {
         waitpid(pid, &status, 0);
-        /*return WEXITSTATUS(status);*/
 	*last_status = WEXITSTATUS(status);
         return *last_status;
     }
     else
     {
         perror("fork");
-	*last_status = 1; /* new */
+	*last_status = 1;
         return 1;
     }
 }
