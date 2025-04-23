@@ -13,7 +13,11 @@ int main(void)
     ssize_t read_bytes;
     int i, j, cmd_count;
     char *cmd_token, *arg_token;
+<<<<<<< HEAD
       int last_status = 0; /*new*/
+=======
+      int last_status = 0; 
+>>>>>>> 362f400ff69cd3648b84cfed2ce6a7d2f868d1dc
 	int cmd_counter = 1;
 
     while (1)
@@ -52,8 +56,11 @@ int main(void)
 
             if (args[0])
 	    {
+<<<<<<< HEAD
      		/*execute_command(args);
             execute_command(args, &last_status);*/
+=======
+>>>>>>> 362f400ff69cd3648b84cfed2ce6a7d2f868d1dc
 	   last_status = execute_command(args, &last_status, &cmd_counter);
                 cmd_counter++;
 	    }
@@ -61,6 +68,5 @@ int main(void)
 	}
     }
 
-    /*return 0;*/
     return last_status;
 }

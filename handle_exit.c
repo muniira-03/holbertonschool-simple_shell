@@ -49,42 +49,41 @@ void handle_exit(char **args, int last_status)
     exit(status);
 }
 
-/**
+/*
  * execute_command - Executes a single command
  * @args: Array of command and arguments
  * Return: Status code
  */
-int execute_command(char **args, int *last_status)
+
+int execute_command(char **args, int *last_status, int *cmd_count)
 {
     pid_t pid;
     int status;
 
     if (_strcmp(args[0], "exit") == 0)
-	{
-	 	handle_exit(args, *last_status);
-        	return *last_status;
-	}
+    {
+        handle_exit(args, *last_status);
+        return *last_status;
+    }
 
     pid = fork();
     if (pid == 0)
     {
-    
-	execvp(args[0], args);
-        perror(args[0]);
-	exit(127); /* Command not found status */
-    
+        execvp(args[0], args);
+        fprintf(stderr, "./hsh: %d: %s: not found\n", *cmd_count, args[0]);
+        exit(127);
     }
     else if (pid > 0)
     {
+        (*cmd_count)++;
         waitpid(pid, &status, 0);
-	*last_status = WEXITSTATUS(status);
+        *last_status = WEXITSTATUS(status);
         return *last_status;
     }
     else
     {
         perror("fork");
-	*last_status = 1;
+        *last_status = 1;
         return 1;
     }
 }
-
