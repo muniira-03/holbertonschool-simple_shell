@@ -1,0 +1,75 @@
+i.TH simple_shell 1 "April 2025" "1.0" "Simple Shell Manual"
+
+.SH NAME
+simple_shell \- A simple UNIX command-line interpreter
+
+.SH SYNOPSIS
+.B ./hsh
+[no options]
+
+.SH DESCRIPTION
+The
+.B simple_shell
+is a basic implementation of a UNIX shell. It reads commands from standard input and executes them using system calls such as
+.BR fork (2),
+.BR execve (2),
+and
+.BR wait (2).
+
+This shell supports:
+
+.IP \(bu
+Interactive mode: where the user types commands directly.
+.IP \(bu
+Non-interactive mode: where the shell reads commands from a script or piped input.
+.IP \(bu
+Built-in commands: such as
+.BR exit
+and
+.BR env .
+.IP \(bu
+Environment variable parsing and
+.B $PATH
+handling.
+
+.SH OPTIONS
+This shell takes no options. All commands should be entered after the shell has started.
+
+.SH USAGE
+Examples:
+
+.B Interactive mode:
+
+.RS
+$ ./hsh
+.RE
+
+.B Non-interactive mode:
+
+.RS
+$ echo "ls -l" | ./hsh
+.RE
+
+.SH BUILTINS
+The following built-in commands are supported:
+
+.TP
+.B exit
+Exits the shell.
+
+.TP
+.B env
+Prints the current environment.
+
+.SH AUTHORS
+Written by the Simple Shell team at Holberton School and Academy by Tuwaiq.
+
+.SH BUGS
+No known bugs at the moment. Contributions and issues can be submitted via GitHub.
+
+.SH SEE ALSO
+.BR sh (1),
+.BR bash (1),
+.BR fork (2),
+.BR execve (2),
+.BR wait (2)
