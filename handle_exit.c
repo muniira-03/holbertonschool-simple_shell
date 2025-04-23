@@ -59,6 +59,7 @@ int execute_command(char **args, int *last_status, int *cmd_count)
 {
     pid_t pid;
     int status;
+    struct stat st;/*new*/
 
     if (_strcmp(args[0], "exit") == 0)
     {
@@ -69,20 +70,20 @@ int execute_command(char **args, int *last_status, int *cmd_count)
     pid = fork();
     if (pid == 0)
    {
-  /*      
-        char *path = getenv("PATH");
-        if (path == NULL || path[0] == '\0')
+	/* Check if command exists in current directory */
+        if (stat(args[0], &st) == -1)
         {
             fprintf(stderr, "./hsh: %d: %s: not found\n", *cmd_count, args[0]);
             exit(127);
         }
-    
-        if (getenv("PATH") == NULL)
+	/* Check if it's executable */
+        if (!(st.st_mode & S_IXUSR))
         {
             fprintf(stderr, "./hsh: %d: %s: not found\n", *cmd_count, args[0]);
             exit(127);
         }
-*/	    
+
+
         execvp(args[0], args);
         fprintf(stderr, "./hsh: %d: %s: not found\n", *cmd_count, args[0]);
         exit(127);
