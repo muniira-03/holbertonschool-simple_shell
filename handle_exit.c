@@ -68,9 +68,22 @@ int execute_command(char **args, int *last_status)
     pid = fork();
     if (pid == 0)
     {
-        execvp(args[0], args);
-        perror(args[0]);
+      	/*new*/
+	if (access(args[0], X_OK) == -1)
+        {
+        fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+            exit(127);
+        }
+	    
+	    
+	    
+	execvp(args[0], args);
+        /*perror(args[0]);*/ 
+	/*new*/
+	fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+	
 	exit(127); /* Command not found status */
+    
     }
     else if (pid > 0)
     {

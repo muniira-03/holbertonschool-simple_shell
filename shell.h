@@ -7,6 +7,9 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
+#include <unistd.h>  /*new*/
+
+
 
 #define MAX_INPUT 1024
 #define MAX_ARGS 64
