@@ -9,7 +9,6 @@
 #include <sys/stat.h>
 
 
-
 #define MAX_INPUT 1024
 #define MAX_ARGS 64
 
@@ -24,5 +23,6 @@ void handle_exit(char **args, int last_status);
 int execute_command(char **args, int *last_status, int *cmd_count, char **env);
 char *find_command_path(char *command, char **env);
 char *_getenv(const char *name, char **env);
+
 
 #endif

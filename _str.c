@@ -1,6 +1,5 @@
 #include "shell.h"
 
-
 /**
  * _strlen - Custom strlen implementation
  * @s: String to measure
@@ -12,6 +11,9 @@ size_t _strlen(const char *s)
     while (s && s[len]) len++;
     return len;
 }
+
+
+
 
 /**
  * _strchr - Custom strchr implementation
@@ -29,6 +31,8 @@ char *_strchr(const char *s, int c)
     }
     return NULL;
 }
+
+
 
 /**
  * _strtok - Custom strtok implementation without strspn
@@ -81,6 +85,8 @@ char *_strtok(char *str, const char *delim)
 }
 
 
+
+
 /**
  * _strcmp - Custom strcmp implementation
  * @s1: First string
@@ -97,3 +103,21 @@ int _strcmp(char *s1, char *s2)
     return *s1 - *s2;
 }
 
+
+
+/**
+ * _strncmp - Custom strncmp implementation
+ * @s1: First string
+ * @s2: Second string
+ * @n: Number of characters to compare
+ * Return: 0 if equal, difference otherwise
+ */
+int _strncmp(const char *s1, const char *s2, size_t n)
+{
+    while (n-- && *s1 && *s2 && *s1 == *s2)
+    {
+        s1++;
+        s2++;
+    }
+    return n == (size_t)-1 ? 0 : *s1 - *s2;
+}

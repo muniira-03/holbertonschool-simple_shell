@@ -27,6 +27,7 @@ int _atoi(char *s)
 }
 
 
+
 /**
  * handle_exit - Handles the exit built-in command
  * @args: Command arguments
@@ -34,9 +35,9 @@ int _atoi(char *s)
  */
 void handle_exit(char **args, int last_status)
 {
-    int status = last_status; /* Default to last command's status */
+    int status = last_status; 
 
-    if (args[1]) /* If exit has argument */
+    if (args[1]) 
     {
         status = _atoi(args[1]);
         if (status < 0)
@@ -49,12 +50,13 @@ void handle_exit(char **args, int last_status)
     exit(status);
 }
 
+
+
 /*
  * execute_command - Executes a single command
  * @args: Array of command and arguments
  * Return: Status code
  */
-
 int execute_command(char **args, int *last_status, int *cmd_count, char **env)
 {
     pid_t pid;
@@ -78,41 +80,23 @@ int execute_command(char **args, int *last_status, int *cmd_count, char **env)
 
     pid = fork();
     if (pid == 0)
-   {
-	/* Check if command exists in current directory 
-        if (stat(args[0], &st) == -1)
-        {
-            fprintf(stderr, "./hsh: %d: %s: not found\n", *cmd_count, args[0]);
-            exit(127);
-        }
-	// Check if it's executable
-        if (!(st.st_mode & S_IXUSR))
-        {
-            fprintf(stderr, "./hsh: %d: %s: not found\n", *cmd_count, args[0]);
-            exit(127);
-        }
-
-
-        execvp(args[0], args);
-        fprintf(stderr, "./hsh: %d: %s: not found\n", *cmd_count, args[0]);
-        exit(127);*/
-	 
-	   
+   {	   
 	 execve(full_path, args, env);
-        /* If execv returns, it failed */
+        
+	 /* If execv returns, it failed */
         free(full_path);
         exit(127);
     }
     else if (pid > 0)
     {
-	free(full_path);/*new*/
+	free(full_path);
         waitpid(pid, &status, 0);
         *last_status = WEXITSTATUS(status);
         return *last_status;
     }
     else
     {
-	free(full_path);/*new*/
+	free(full_path);
         perror("fork");
         *last_status = 1;
         return 1;

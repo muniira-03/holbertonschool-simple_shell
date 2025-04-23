@@ -79,20 +79,3 @@ int i;
     }
     return NULL;
 }
-
-/**
- * _strncmp - Custom strncmp implementation
- * @s1: First string
- * @s2: Second string
- * @n: Number of characters to compare
- * Return: 0 if equal, difference otherwise
- */
-int _strncmp(const char *s1, const char *s2, size_t n)
-{
-    while (n-- && *s1 && *s2 && *s1 == *s2)
-    {
-        s1++;
-        s2++;
-    }
-    return n == (size_t)-1 ? 0 : *s1 - *s2;
-}
