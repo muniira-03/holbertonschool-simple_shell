@@ -30,12 +30,34 @@ int _atoi(char *s)
  * handle_exit - Handles the exit built-in command
  * @args: Command arguments
  * Return: 1 if not exiting, -1 if exiting with error
- */
+ *
 int handle_exit(char **args)
 {
     int status = 0;
 
     if (args[1])
+    {
+        status = _atoi(args[1]);
+        if (status < 0)
+        {
+            fprintf(stderr, "./hsh: exit: %d: numeric argument required\n", status);
+            status = 2;
+        }
+    }
+
+    exit(status);
+}
+*/
+/**
+ * handle_exit - Handles the exit built-in command
+ * @args: Command arguments
+ * @last_status: Status of last executed command
+ */
+void handle_exit(char **args, int last_status)
+{
+    int status = last_status; /* Default to last command's status */
+
+    if (args[1]) /* If exit has argument */
     {
         status = _atoi(args[1]);
         if (status < 0)
@@ -53,29 +75,36 @@ int handle_exit(char **args)
  * @args: Array of command and arguments
  * Return: Status code
  */
-int execute_command(char **args)
+int execute_command(char **args, int *last_status) /*int *last_status is new*/
 {
     pid_t pid;
     int status;
 
     if (_strcmp(args[0], "exit") == 0)
-        handle_exit(args);
+	{/*handle_exit(args);*/
+	 	handle_exit(args, *last_status);
+        	return *last_status;
+	}
 
     pid = fork();
     if (pid == 0)
     {
         execvp(args[0], args);
         perror(args[0]);
-        exit(EXIT_FAILURE);
+        /*exit(EXIT_FAILURE);*/
+	exit(127); /* Command not found status */
     }
     else if (pid > 0)
     {
         waitpid(pid, &status, 0);
-        return WEXITSTATUS(status);
+        /*return WEXITSTATUS(status);*/
+	*last_status = WEXITSTATUS(status);
+        return *last_status;
     }
     else
     {
         perror("fork");
+	*last_status = 1; /* new */
         return 1;
     }
 }
