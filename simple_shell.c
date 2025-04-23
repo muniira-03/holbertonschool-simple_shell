@@ -14,6 +14,7 @@ int main(void)
     int i, j, cmd_count;
     char *cmd_token, *arg_token;
       int last_status = 0; /*new*/
+	int cmd_counter = 1;
 
     while (1)
     {
@@ -41,7 +42,7 @@ int main(void)
         {
             /* Split command into arguments */
             j = 0;
-            arg_token = _strtok(commands[i], " \t");
+	    arg_token = _strtok(commands[i], " \t");
             while (arg_token && j < MAX_ARGS - 1)
             {
                 args[j++] = arg_token;
@@ -50,9 +51,14 @@ int main(void)
             args[j] = NULL;
 
             if (args[0])
-                /*execute_command(args);*/
-            execute_command(args, &last_status);
-        }
+	    {
+     		/*execute_command(args);
+            execute_command(args, &last_status);*/
+	   last_status = execute_command(args, &last_status, &cmd_counter);
+                cmd_counter++;
+	    }
+	
+	}
     }
 
     /*return 0;*/
