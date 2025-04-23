@@ -4,6 +4,7 @@
  * main - Simple shell with proper command processing
  * Return: Exit status
  */
+
 int main(void)
 {
     char input[MAX_INPUT] = {0};
