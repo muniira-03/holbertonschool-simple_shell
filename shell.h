@@ -21,6 +21,6 @@ int _strcmp(char *s1, char *s2);
 int _atoi(char *s);
 void handle_exit(char **args, int last_status);
 int execute_command(char **args, int *last_status, int *cmd_count);
-
+char *find_command_path(char *command);
 
 #endif

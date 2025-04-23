@@ -59,7 +59,7 @@ int execute_command(char **args, int *last_status, int *cmd_count)
 {
     pid_t pid;
     int status;
-    struct stat st;/*new*/
+    char *full_path;
 
     if (_strcmp(args[0], "exit") == 0)
     {
@@ -67,16 +67,25 @@ int execute_command(char **args, int *last_status, int *cmd_count)
         return *last_status;
     }
 
+
+ /* Find command in PATH */
+    full_path = find_command_path(args[0]);
+    if (!full_path)
+    {
+        fprintf(stderr, "./hsh: %d: %s: not found\n", *cmd_count, args[0]);
+        return 127;
+    }
+
     pid = fork();
     if (pid == 0)
    {
-	/* Check if command exists in current directory */
+	/* Check if command exists in current directory 
         if (stat(args[0], &st) == -1)
         {
             fprintf(stderr, "./hsh: %d: %s: not found\n", *cmd_count, args[0]);
             exit(127);
         }
-	/* Check if it's executable */
+	// Check if it's executable
         if (!(st.st_mode & S_IXUSR))
         {
             fprintf(stderr, "./hsh: %d: %s: not found\n", *cmd_count, args[0]);
@@ -86,16 +95,24 @@ int execute_command(char **args, int *last_status, int *cmd_count)
 
         execvp(args[0], args);
         fprintf(stderr, "./hsh: %d: %s: not found\n", *cmd_count, args[0]);
+        exit(127);*/
+	 
+	   
+	 execv(full_path, args);
+        /* If execv returns, it failed */
+        free(full_path);
         exit(127);
     }
     else if (pid > 0)
     {
+	free(full_path);/*new*/
         waitpid(pid, &status, 0);
         *last_status = WEXITSTATUS(status);
         return *last_status;
     }
     else
     {
+	free(full_path);/*new*/
         perror("fork");
         *last_status = 1;
         return 1;
