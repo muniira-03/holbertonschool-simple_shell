@@ -5,7 +5,7 @@
  * Return: Exit status
  */
 
-int main(void)
+int main(int argc, char **argv, char **env)
 {
     char input[MAX_INPUT] = {0};
     char *commands[MAX_INPUT/2 + 1] = {NULL};
@@ -16,6 +16,9 @@ int main(void)
     char *cmd_token, *arg_token;
       int last_status = 0; /*new*/
  int cmd_counter = 1;
+(void)argc;
+    (void)argv;
+
 
     while (1)
     {
@@ -55,7 +58,7 @@ int main(void)
      {
        /*execute_command(args);
             execute_command(args, &last_status);*/
-    last_status = execute_command(args, &last_status, &cmd_counter);
+    last_status = execute_command(args, &last_status, &cmd_counter, env);
                 cmd_counter++;
      }
  

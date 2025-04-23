@@ -55,7 +55,7 @@ void handle_exit(char **args, int last_status)
  * Return: Status code
  */
 
-int execute_command(char **args, int *last_status, int *cmd_count)
+int execute_command(char **args, int *last_status, int *cmd_count, char **env)
 {
     pid_t pid;
     int status;
@@ -69,7 +69,7 @@ int execute_command(char **args, int *last_status, int *cmd_count)
 
 
  /* Find command in PATH */
-    full_path = find_command_path(args[0]);
+    full_path = find_command_path(args[0], env);
     if (!full_path)
     {
         fprintf(stderr, "./hsh: %d: %s: not found\n", *cmd_count, args[0]);
@@ -98,7 +98,7 @@ int execute_command(char **args, int *last_status, int *cmd_count)
         exit(127);*/
 	 
 	   
-	 execv(full_path, args);
+	 execve(full_path, args, env);
         /* If execv returns, it failed */
         free(full_path);
         exit(127);
