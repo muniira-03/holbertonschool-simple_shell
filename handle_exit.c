@@ -26,28 +26,7 @@ int _atoi(char *s)
     return sign * res;
 }
 
-/**
- * handle_exit - Handles the exit built-in command
- * @args: Command arguments
- * Return: 1 if not exiting, -1 if exiting with error
- *
-int handle_exit(char **args)
-{
-    int status = 0;
 
-    if (args[1])
-    {
-        status = _atoi(args[1]);
-        if (status < 0)
-        {
-            fprintf(stderr, "./hsh: exit: %d: numeric argument required\n", status);
-            status = 2;
-        }
-    }
-
-    exit(status);
-}
-*/
 /**
  * handle_exit - Handles the exit built-in command
  * @args: Command arguments
@@ -75,7 +54,7 @@ void handle_exit(char **args, int last_status)
  * @args: Array of command and arguments
  * Return: Status code
  */
-int execute_command(char **args, int *last_status) /*int *last_status is new*/
+int execute_command(char **args, int *last_status)
 {
     pid_t pid;
     int status;
@@ -88,15 +67,7 @@ int execute_command(char **args, int *last_status) /*int *last_status is new*/
 
     pid = fork();
     if (pid == 0)
-    {	
-	struct stat st;
-	if (stat(args[0], &st) == -1)/*new*/
-        {
-          fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
-            exit(127);
-        }
-
-
+    {
         execvp(args[0], args);
         perror(args[0]);
 	exit(127); /* Command not found status */
