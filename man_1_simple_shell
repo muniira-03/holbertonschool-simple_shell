@@ -62,7 +62,10 @@ Exits the shell.
 Prints the current environment.
 
 .SH AUTHORS
-Written by the Simple Shell team at Holberton School and Academy by Tuwaiq.
+
+Munira Alsubaie
+
+Shurooq Alabbadi
 
 .SH BUGS
 No known bugs at the moment. Contributions and issues can be submitted via GitHub.
