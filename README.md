@@ -23,3 +23,40 @@ Interactive Mode
     ./hsh
 - Non-Interactvie Mode 
     echo "ls -l" | ./hsh
+## 📂 Project Structure
+
+File | Description
+main.c | Entry point, main loop for reading and executing commands
+prompt.c | Handles the shell prompt and command input
+executor.c | Contains logic for command execution (fork, execve, etc.)
+builtins.c | Implements built-in commands like exit and env
+path.c | Manages environment variables and command path resolution
+utils.c | Helper functions for strings and memory management
+errors.c | Error printing and handling
+free.c | Frees memory allocations
+
+## ⚙️  Functions Used
+
+
+Here are the core functions implemented across the files:
+
+_getline – read a line of input
+parse_command – tokenize input into arguments
+execute_command – fork and execute input command
+_getenv – custom getenv function to retrieve environment variables
+check_path – search and resolve the correct path of commands
+is_builtin – check if command is a builtin
+exit_shell – exit shell built-in
+print_env – env built-in
+free_args, free_env – memory management utilities
+_strdup, _strcmp, _strcat, _strlen – string handling
+
+## 📊 Flowchart Shell
+
+![Shell Flowchart](https://github.com/muniira-03/holbertonschool-simple_shell/blob/main/flowchart.png?raw=true)
+
+##👥 Authors
+ - @muniira-03
+ - @ShAlabbadi
+
+
