@@ -62,13 +62,22 @@ void handle_exit(char **args, int last_status)
 int execute_command(char **args, int *last_status, int *cmd_count, char **env)
 {
 	pid_t pid;
-	int status;
+	int status, i;
 	char *full_path;
 
 	if (_strcmp(args[0], "exit") == 0)
 	{
 		handle_exit(args, *last_status);
 		return (*last_status);
+	}
+	else if (_strcmp(args[0], "env") == 0)
+	{
+		/* Handle env built-in */
+		for (i = 0; env[i] != NULL; i++)
+		{
+			printf("%s\n", env[i]);
+		}
+		return (0);
 	}
 	/* Find command in PATH */
 	full_path = find_command_path(args[0], env);
@@ -77,9 +86,7 @@ int execute_command(char **args, int *last_status, int *cmd_count, char **env)
 		fprintf(stderr, "./hsh: %d: %s: not found\n", *cmd_count, args[0]);
 		return (127);
 	}
-
 	pid = fork();
-
 	if (pid == 0)
 	{
 		execve(full_path, args, env);
