@@ -1,45 +1,51 @@
 #include "shell.h"
 
 /**
-	* _strlen - Custom strlen implementation
-	* @s: String to measure
-	* Return: Length of string
-	*/
+* _strlen - Custom strlen implementation
+* @s: String to measure
+* Return: Length of string
+*/
+
 size_t _strlen(const char *s)
 {
 	size_t len = 0;
-	while (s && s[len]) len++;
-	return len;
+
+	while (s && s[len])
+		len++;
+
+	return (len);
 }
 
 
 
 
 /**
-	* _strchr - Custom strchr implementation
-	* @s: String to search
-	* @c: Character to find
-	* Return: Pointer to character or NULL
-	*/
+* _strchr - Custom strchr implementation
+* @s: String to search
+* @c: Character to find
+* Return: Pointer to character or NULL
+*/
+
 char *_strchr(const char *s, int c)
 {
 	while (s && *s)
 	{
-	if (*s == c)
-	return (char *)s;
-	s++;
+		if (*s == c)
+		return ((char *)s);
+		s++;
 	}
-	return NULL;
+	return (NULL);
 }
 
 
 
 /**
-	* _strtok - Custom strtok implementation without strspn
-	* @str: String to tokenize
-	* @delim: Delimiters
-	* Return: Next token or NULL
-	*/
+* _strtok - Custom strtok implementation without strspn
+* @str: String to tokenize
+* @delim: Delimiters
+* Return: Next token or NULL
+*/
+
 char *_strtok(char *str, const char *delim)
 {
 	static char *save_ptr;
@@ -49,21 +55,21 @@ char *_strtok(char *str, const char *delim)
 	save_ptr = str;
 
 	if (!save_ptr || !*save_ptr)
-	return NULL;
+	return (NULL);
 
 	/* Skip leading delimiters */
 	start = save_ptr;
 	while (*start)
 	{
-	if (!_strchr(delim, *start))
-	break;
-	start++;
+		if (!_strchr(delim, *start))
+		break;
+		start++;
 	}
 
 	if (!*start)
 	{
-	save_ptr = start;
-	return NULL;
+		save_ptr = start;
+		return (NULL);
 	}
 
 	/* Find end of token */
@@ -73,51 +79,53 @@ char *_strtok(char *str, const char *delim)
 
 	if (*end)
 	{
-	*end = '\0';
-	save_ptr = end + 1;
+		*end = '\0';
+		save_ptr = end + 1;
 	}
 	else
 	{
-	save_ptr = end;
+		save_ptr = end;
 	}
 
-	return start;
+	return (start);
 }
 
 
 
 
 /**
-	* _strcmp - Custom strcmp implementation
-	* @s1: First string
-	* @s2: Second string
-	* Return: 0 if equal, difference otherwise
-	*/
+* _strcmp - Custom strcmp implementation
+* @s1: First string
+* @s2: Second string
+* Return: 0 if equal, difference otherwise
+*/
+
 int _strcmp(char *s1, char *s2)
 {
 	while (*s1 && *s2 && *s1 == *s2)
 	{
-	s1++;
-	s2++;
+		s1++;
+		s2++;
 	}
-	return *s1 - *s2;
+	return (*s1 - *s2);
 }
 
 
 
 /**
-	* _strncmp - Custom strncmp implementation
-	* @s1: First string
-	* @s2: Second string
-	* @n: Number of characters to compare
-	* Return: 0 if equal, difference otherwise
-	*/
+* _strncmp - Custom strncmp implementation
+* @s1: First string
+* @s2: Second string
+* @n: Number of characters to compare
+* Return: 0 if equal, difference otherwise
+*/
+
 int _strncmp(const char *s1, const char *s2, size_t n)
 {
 	while (n-- && *s1 && *s2 && *s1 == *s2)
 	{
-	s1++;
-	s2++;
+		s1++;
+		s2++;
 	}
-	return n == (size_t)-1 ? 0 : *s1 - *s2;
+	return (n == (size_t)-1 ? 0 : *s1 - *s2);
 }
